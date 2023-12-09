@@ -34,4 +34,16 @@ Performance counter stats for './test_j':
                 65      page-faults                      #  403.132 /sec                      
        0.162663037 seconds time elapsed
 
-So this cut down on time by like a third. (2.65 in total), but there still some work taht can be done on that last equasion.
+The next step is to multithread it - in this case I just made two threads as a proof of concept. While this function is a textbook example of what to try and put in multiple threads, the exact number of threads is really up to the hardware. You need to balance the overhead of making a thread with the advantages of using multiple cores. I knew this going in and I was a bit suprised by just how much overhead time making just those two threads was.
+
+ Performance counter stats for './test_j':
+
+            173.39 msec task-clock                       #    1.957 CPUs utilized             
+                 3      context-switches                 #   17.302 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                90      page-faults                      #  519.063 /sec                      
+
+       0.088605482 seconds time elapsed
+
+       0.170549000 seconds user
+       0.003966000 seconds sys
