@@ -1,0 +1,37 @@
+1. What would be your general approach to reducing the computational time of the following code by making the computation or algorithm more efficient?
+There are serveal steps to optemization that can be done, which really just boil down to what kind of needs we have.
+    0. The looped values aren't stored, just run the last loop once
+    1. pull out the constant values and do the math once ahead of time, reduce the time of each funtion call. Basic stuff.
+    2. More math heavy is to identify variable values here that can be pulled out and reused mid-iteration. This requires more significant restructuring of the code, and can obscure the equasion that is being used so heavy commenting is needed. once each loop is identified, figure out which one takes the most time and reduce the time needed to run each. 
+    3. the final step would be more fraught, multithreading each loop of the software
+    4. Well I say frought but it maynot actually be that bad.
+    5. Section out the math into stages, run them and store what is needed to the next stage.
+    6. Actaully each iteration would be not too bad to break out - it's not an iterative function - each run is not effected by the others.
+
+2. Compile and test-run the accompanying C code test_j.c. To compile with gcc, for example, add the flag -lm. 
+3. Assess its performance using any methods available to you. Use profiling tools such as GPROF and PERF to identify and quantify the steps that are most time-consuming.
+4. Modify the code to reduce the computational time. Any details are welcome. Compare the performance between the original and modified versions.
+5. Explain your achievement, any challenges or blockers encountered, any lessons or insights you have gained during this exercise
+
+
+Initial run:
+Performance counter stats for './test_j':
+
+            460.18 msec task-clock                       #    0.988 CPUs utilized             
+                39      context-switches                 #   84.750 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                64      page-faults                      #  139.078 /sec                      
+       0.465814022 seconds time elapsed
+
+So the first todo is just to remove repeated work - if a bit of math is dont leave it done. The trouble with is that (presuambly) we want each of these results to get stored somewhere, so the math needs doing.
+
+After sectioning off repeated work:
+Performance counter stats for './test_j':
+
+            161.24 msec task-clock                       #    0.991 CPUs utilized             
+                18      context-switches                 #  111.636 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                65      page-faults                      #  403.132 /sec                      
+       0.162663037 seconds time elapsed
+
+So this cut down on time by like a third. (2.65 in total), but there still some work taht can be done on that last equasion.
